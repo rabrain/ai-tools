@@ -3,7 +3,7 @@ import { ModelConfig, Optimizer, Precision, RunConfig } from "@/app/_interfaces"
 export const defaultRunConfig: RunConfig = {
   inferencePrecision: Precision.half,
   trainingPrecision: Precision.mixed,
-  isTraining: true,
+  isTraining: false,
   optimizer: Optimizer.SGD,
   optimizerSGDMomentum: true,
   sequenceLength: 512,
