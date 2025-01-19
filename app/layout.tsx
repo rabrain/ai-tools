@@ -13,8 +13,8 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: "VRAM Calculator",
-  description: "VRAM Calculator",
+  title: "AI Tools Online Free",
+  description: "A list of best AI tools online free",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
