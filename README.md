@@ -26,3 +26,7 @@ It will result with `./out` folder which can be served with any webserver (e.g. 
 
 - Quantized models inference
 - LoRA/QLoRA fine-tuning
+
+## Credits
+
+This project is forked from [furiousteabag/vram-calculator](https://github.com/furiousteabag/vram-calculator).
