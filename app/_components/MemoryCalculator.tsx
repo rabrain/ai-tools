@@ -30,7 +30,7 @@ export default function MemoryCalculator() {
   const resultEstimation = estimateResult({ modelConfig, runConfig, unit: resultUnit })
 
   return (
-    <Grid container spacing={2} justifyContent="center">
+    <>
       <Grid item xs={12} sm={6}>
         <Stack spacing={2} justifyItems="center">
           <Typography variant="h5" align="center" sx={{ fontWeight: "bold" }}>
@@ -421,23 +421,20 @@ export default function MemoryCalculator() {
                     {resultUnit} of VRAM {runConfig.numGPUs > 1 ? "per GPU" : ""}
                   </span>
                 }
-                secondary={`Number of Parameters (${
-                  modelConfig.numParams
-                }) billion × number of bytes per parameter (${
-                  runConfig.isTraining
+                secondary={`Number of Parameters (${modelConfig.numParams
+                  }) billion × number of bytes per parameter (${runConfig.isTraining
                     ? runConfig.trainingPrecision == Precision.mixed
                       ? "6; parameters are stored in both full precision and half precision"
                       : "4"
                     : runConfig.inferencePrecision == Precision.full
                       ? 4
                       : 2
-                }) ${
-                  runConfig.numGPUs > 1 &&
-                  ((!runConfig.isTraining && runConfig.isInferenceModelParallelism) ||
-                    (runConfig.isTraining && runConfig.isFSDP))
+                  }) ${runConfig.numGPUs > 1 &&
+                    ((!runConfig.isTraining && runConfig.isInferenceModelParallelism) ||
+                      (runConfig.isTraining && runConfig.isFSDP))
                     ? `÷ Number of GPUs (${runConfig.numGPUs})`
                     : ""
-                }`}
+                  }`}
               />
             </ListItem>
 
@@ -453,13 +450,11 @@ export default function MemoryCalculator() {
                   }
                   secondary={
                     (runConfig.isTraining
-                      ? `Sum of sizes of all intermediate tensors during forward pass across all ${
-                          modelConfig.numLayers
-                        } layers${
-                          runConfig.numGPUs > 1 && runConfig.isFSDP && false
-                            ? ` ÷ Number of GPUs (${runConfig.numGPUs})`
-                            : ""
-                        }.`
+                      ? `Sum of sizes of all intermediate tensors during forward pass across all ${modelConfig.numLayers
+                      } layers${runConfig.numGPUs > 1 && runConfig.isFSDP && false
+                        ? ` ÷ Number of GPUs (${runConfig.numGPUs})`
+                        : ""
+                      }.`
                       : `Size of a biggest tensor within forward pass. It is estimated as the sum of all intermediate tensors within computation of a single layer.`) +
                     ` Activations size have quadratic dependence on Sequence Length.`
                   }
@@ -477,11 +472,9 @@ export default function MemoryCalculator() {
                       {resultUnit} of VRAM {runConfig.numGPUs > 1 ? "per GPU" : ""}
                     </span>
                   }
-                  secondary={`Gradient is stored for each parameter in full precision, so it is Number of Parameters (${
-                    modelConfig.numParams
-                  } billion) × number of bytes per parameter (4) ${
-                    runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
-                  }`}
+                  secondary={`Gradient is stored for each parameter in full precision, so it is Number of Parameters (${modelConfig.numParams
+                    } billion) × number of bytes per parameter (4) ${runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
+                    }`}
                 />
               </ListItem>
             )}
@@ -496,11 +489,9 @@ export default function MemoryCalculator() {
                       {resultUnit} of VRAM {runConfig.numGPUs > 1 ? "per GPU" : ""}
                     </span>
                   }
-                  secondary={`Optimizer stores moving average of gradients for each parameter in full precision, so it is Number of Parameters (${
-                    modelConfig.numParams
-                  } billion) × number of bytes per parameter (4) ${
-                    runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
-                  }`}
+                  secondary={`Optimizer stores moving average of gradients for each parameter in full precision, so it is Number of Parameters (${modelConfig.numParams
+                    } billion) × number of bytes per parameter (4) ${runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
+                    }`}
                 />
               </ListItem>
             )}
@@ -515,11 +506,9 @@ export default function MemoryCalculator() {
                       {resultUnit} of VRAM {runConfig.numGPUs > 1 ? "per GPU" : ""}
                     </span>
                   }
-                  secondary={`Optimizer stores moving average of squared gradients for each parameter in full precision, so it is Number of Parameters (${
-                    modelConfig.numParams
-                  } billion) × number of bytes per parameter (4) ${
-                    runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
-                  }`}
+                  secondary={`Optimizer stores moving average of squared gradients for each parameter in full precision, so it is Number of Parameters (${modelConfig.numParams
+                    } billion) × number of bytes per parameter (4) ${runConfig.numGPUs > 1 && runConfig.isFSDP ? `÷ Number of GPUs (${runConfig.numGPUs})` : ""
+                    }`}
                 />
               </ListItem>
             )}
@@ -534,21 +523,19 @@ export default function MemoryCalculator() {
                       {resultUnit} of VRAM {runConfig.numGPUs > 1 ? "(same GPU as inputs)" : ""}
                     </span>
                   }
-                  secondary={`Batch Size (${runConfig.batchSize}) × Sequence Length (${
-                    runConfig.sequenceLength
-                  }) × Vocabulary Size (${modelConfig.vocabSize}) × number of bytes per parameter (4) ${
-                    runConfig.isTraining
+                  secondary={`Batch Size (${runConfig.batchSize}) × Sequence Length (${runConfig.sequenceLength
+                    }) × Vocabulary Size (${modelConfig.vocabSize}) × number of bytes per parameter (4) ${runConfig.isTraining
                       ? "× 2 (storing probabilities after softmax output which are the same size as output)"
                       : runConfig.inferencePrecision != Precision.full
                         ? "(even we infer model in half precision, outputs are still almost always casted to fp32 within the model itself)"
                         : ""
-                  }`}
+                    }`}
                 />
               </ListItem>
             )}
           </List>
         </Stack>
       </Grid>
-    </Grid>
+    </>
   )
-} 
+}
